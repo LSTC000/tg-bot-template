@@ -1,0 +1,47 @@
+version: '3.4'
+
+volumes:
+  postgres-data:
+  redis-data:
+  
+networks:
+  net:
+
+services:
+  bot:
+    container_name: bot-template
+    build: ..
+    env_file:
+      - ../.env
+    restart: always
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - net
+
+  postgres:
+    container_name: postgres-template
+    image: postgres:15
+    env_file:
+      - ../.env
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5432:5432"
+    networks:
+      - net
+
+  redis:
+    container_name: redis-template
+    image: redis:6.2-alpine
+    env_file:
+      - ../.env
+    volumes:
+      - redis-data:/data
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - net

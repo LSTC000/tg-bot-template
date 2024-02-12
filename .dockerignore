@@ -1,0 +1,14 @@
+.pytest_cache
+.ruff_cache
+.idea
+*__pycache__
+.env.local
+.venv
+venv
+docs
+.gitignore
+.pre-commit-config.yaml
+README.md
+changelog.md
+Makefile
+pyproject.toml
