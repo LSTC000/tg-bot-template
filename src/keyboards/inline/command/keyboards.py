@@ -1,7 +1,7 @@
 from aiogram.utils.keyboard import InlineKeyboardMarkup
 
 from src.config import settings
-from src.schemas import InlineKeyboardBuild, InlineKeyboardButton
+from src.schemas import InlineKeyboardBuild, InlineKeyboardButton, InlineKeyboardRow
 
 from ..core import CoreInlineKeyboard
 
@@ -16,11 +16,15 @@ class CommandInlineKeyboards(CoreInlineKeyboard):
         return self.builder(
             build_data=InlineKeyboardBuild(
                 width=self._width,
-                buttons=[
-                    InlineKeyboardButton(
-                        text=self._cmd_start_btn,
-                        data=self._cmd_start_data,
-                    )
+                rows=[
+                    InlineKeyboardRow(
+                        buttons=[
+                            InlineKeyboardButton(
+                                text=self._cmd_start_btn,
+                                data=self._cmd_start_data,
+                            ),
+                        ],
+                    ),
                 ],
             )
         )

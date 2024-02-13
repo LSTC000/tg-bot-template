@@ -9,8 +9,12 @@ class InlineKeyboardButton(CoreModel):
     url: str | None = Field(None, description="URL of keyboard button")
 
 
-class InlineKeyboardBuild(CoreModel):
-    width: int = Field(8, description="Keyboard width")
+class InlineKeyboardRow(CoreModel):
     buttons: list[InlineKeyboardButton] = Field(
         ..., description="Buttons data of keyboard"
     )
+
+
+class InlineKeyboardBuild(CoreModel):
+    width: int = Field(8, description="Keyboard width")
+    rows: list[InlineKeyboardRow] = Field(..., description="Rows of keyboard")
