@@ -22,7 +22,11 @@ class RequestManager:
         for param in params.keys():
             param_value = params[param]
             if param_value is not None:
-                if isinstance(param_value, UUID) or isinstance(param_value, datetime):
+                if (
+                    isinstance(param_value, UUID)
+                    or isinstance(param_value, datetime)
+                    or isinstance(param_value, bool)
+                ):
                     param_value = str(param_value)
                 processed_params[param] = param_value
         return processed_params
@@ -33,7 +37,11 @@ class RequestManager:
             processed_payload = {}
             for param in payload.keys():
                 param_value = payload[param]
-                if isinstance(param_value, UUID) or isinstance(param_value, datetime):
+                if (
+                    isinstance(param_value, UUID)
+                    or isinstance(param_value, datetime)
+                    or isinstance(param_value, bool)
+                ):
                     param_value = str(param_value)
                 processed_payload[param] = param_value
         else:
