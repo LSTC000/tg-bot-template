@@ -21,7 +21,7 @@ exclude = [
     ".mypy_cache/",
     ".ruff_cache/",
     ".pytest_cache/",
-    "./app/config/db/metadata.py",
+    "./src/config/db/metadata.py",
 ]
 
 
@@ -31,7 +31,7 @@ exclude = [
 
 [tool.black]
 line-length = 88
-target-version = ["py310"]
+target-version = ["py312"]
 extend-exclude = """
     .git/
     venv/
@@ -41,7 +41,6 @@ extend-exclude = """
     .mypy_cache/
     .pytest_cache/
     .ruff_cache/
-    __init__.py
 """
 
 
