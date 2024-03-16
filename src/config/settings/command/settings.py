@@ -11,5 +11,5 @@ class BaseCommand(CoreSettings):
 class CommandSettings(CoreSettings):
     START: BaseCommand = BaseCommand(
         name="/start",
-        description="Начать работу",
+        description="Перезапуск 🔄",
     )

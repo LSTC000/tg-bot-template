@@ -1,5 +1,5 @@
 from aiogram.fsm.state import StatesGroup
 
 
-class CoreStateSettings(StatesGroup):
+class CoreStatesGroup(StatesGroup):
     pass

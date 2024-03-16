@@ -1,6 +1,7 @@
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
+from src import states
 from src.config import settings
 from src.keyboards import KeyboardRepository
 from src.services import ServiceRepository
@@ -15,8 +16,9 @@ class CommandUseCase(CoreUseCase):
     _cmd_start_msg: str = settings.message.command.START
 
     async def start(self, message: Message, state: FSMContext) -> None:
+        state.clear()
         await message.answer(
             text=self._cmd_start_msg,
             reply_markup=self.keyboards.inline.command.start(),
         )
-        await state.set_state(state=settings.state.command.START)
+        await state.set_state(state=states.CommandStatesGroup.START)

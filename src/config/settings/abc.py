@@ -39,9 +39,5 @@ class ABCSettings(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    def state(self):
-        raise NotImplementedError
-
-    @abstractmethod
     def request(self):
         raise NotImplementedError

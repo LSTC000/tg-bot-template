@@ -10,7 +10,6 @@ from .postgres import PostgresSettings
 from .project import ProjectSettings
 from .redis import RedisSettings
 from .request import RequestSettings
-from .state import StateSettings
 from .token import TokenSettings
 
 
@@ -24,7 +23,6 @@ class Settings(ABCSettings):
     command: CommandSettings = CommandSettings()
     message: MessageSettings = MessageSettings()
     keyboard: KeyboardSettings = KeyboardSettings()
-    state: StateSettings = StateSettings()
     request: RequestSettings = RequestSettings()
 
 
