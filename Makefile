@@ -6,7 +6,7 @@ DC-LOCAL=docker compose -f ./deployment/docker-compose.local.yaml
 DC-PROD=docker compose -f ./deployment/docker-compose.prod.yaml
 
 .PHONY: bot
-bot-start:
+bot-run:
 	$(PYTHON) ./cmd/bot/main.py
 
 .PHONY: lint
