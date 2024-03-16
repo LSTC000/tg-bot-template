@@ -12,5 +12,5 @@ class ABCCoreReplyKeyboard(metaclass=ABCMeta):
         raise NotImplementedError
 
 
-class ABCReplyKeyboardRepository(metaclass=ABCMeta):
+class ABCReplyKeyboardRepository(metaclass=ABCMeta):  # noqa: B024
     ...

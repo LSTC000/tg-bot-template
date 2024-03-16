@@ -7,6 +7,7 @@ select = [
     "B",  # flake8-bugbear
 ]
 ignore = [
+    "W291",  # trailing whitespace
     "E501",  # line too long, обрабатывается black
     "E402",  # module level import not at top of file
     "B008",  # do not perform function calls in argument defaults
