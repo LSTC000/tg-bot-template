@@ -3,6 +3,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage
 
 from src.config.settings import settings
+from src.loader import BotLoader
 
 from .abc import ABCServerBot
 
@@ -13,7 +14,7 @@ class ServerBot(ABCServerBot):
 
     @classmethod
     async def _init_bot(cls) -> Bot:
-        bot = Bot(token=cls._tg_token)
+        bot = BotLoader.get_bot()
         await bot.delete_webhook(drop_pending_updates=cls._drop_pending_updates)
         return bot
 
