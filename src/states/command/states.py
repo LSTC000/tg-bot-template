@@ -4,4 +4,4 @@ from ..core import CoreStatesGroup
 
 
 class CommandStatesGroup(CoreStatesGroup):
-    START = State()
+    start = State()
