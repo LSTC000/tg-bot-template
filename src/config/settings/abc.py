@@ -41,3 +41,7 @@ class ABCSettings(metaclass=ABCMeta):
     @abstractmethod
     def request(self):
         raise NotImplementedError
+
+    @abstractmethod
+    def cache(self):
+        raise NotImplementedError

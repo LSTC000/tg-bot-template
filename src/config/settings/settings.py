@@ -2,6 +2,7 @@ from functools import lru_cache
 
 from .abc import ABCSettings
 from .bot import BotSettings
+from .cache import CacheSettings
 from .command import CommandSettings
 from .keyboard import KeyboardSettings
 from .log import LogSettings
@@ -24,9 +25,10 @@ class Settings(ABCSettings):
     message: MessageSettings = MessageSettings()
     keyboard: KeyboardSettings = KeyboardSettings()
     request: RequestSettings = RequestSettings()
+    cache: CacheSettings = CacheSettings()
 
 
-@lru_cache()
+@lru_cache(maxsize=1)
 def get_settings() -> Settings:
     return Settings()
 
