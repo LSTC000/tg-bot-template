@@ -1,4 +1,4 @@
-from typing import Any, Generic, Type, TypeVar
+from typing import Any, Type
 from uuid import UUID
 
 from pydantic import BaseModel
@@ -11,15 +11,10 @@ from src.common.meta import SingletonMeta
 from src.config.db import Base
 
 
-ModelType = TypeVar("ModelType", bound=Base)
-CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
-UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
-
-
-class CoreCRUD(
-    Generic[ModelType, CreateSchemaType, UpdateSchemaType], metaclass=SingletonMeta
+class CoreCRUD[TModel: Base, TCreate: BaseModel, TUpdate: BaseModel](
+    metaclass=SingletonMeta
 ):
-    def __init__(self, model: Type[ModelType]):
+    def __init__(self, model: Type[TModel]):
         self.model = model
 
     async def get(
@@ -27,7 +22,7 @@ class CoreCRUD(
         db: AsyncSession,
         sid: UUID,
         custom_options: list[ExecutableOption] | None = None,
-    ) -> ModelType | None:
+    ) -> TModel | None:
         query = select(self.model)
 
         if custom_options is not None:
@@ -44,7 +39,7 @@ class CoreCRUD(
         db: AsyncSession,
         query_expression: BinaryExpression,
         custom_options: list[ExecutableOption] | None = None,
-    ) -> ModelType | None:
+    ) -> TModel | None:
         query = select(self.model)
 
         if custom_options is not None:
@@ -61,7 +56,7 @@ class CoreCRUD(
         db: AsyncSession,
         query_expression: BinaryExpression | None = None,
         custom_options: list[ExecutableOption] | None = None,
-    ) -> list[ModelType]:
+    ) -> list[TModel]:
         query = select(self.model)
 
         if custom_options is not None:
@@ -80,7 +75,7 @@ class CoreCRUD(
         limit: int = 50,
         query_expression: BinaryExpression | None = None,
         custom_options: list[ExecutableOption] | None = None,
-    ) -> list[ModelType]:
+    ) -> list[TModel]:
         query = select(self.model)
 
         if custom_options:
@@ -95,8 +90,8 @@ class CoreCRUD(
         return result.scalars().all()
 
     async def create(
-        self, db: AsyncSession, obj_in: CreateSchemaType, with_commit: bool = True
-    ) -> ModelType:
+        self, db: AsyncSession, obj_in: TCreate, with_commit: bool = True
+    ) -> TModel:
         obj = self.model(**obj_in.model_dump())
 
         db.add(obj)
@@ -112,10 +107,10 @@ class CoreCRUD(
     @staticmethod
     async def update(
         db: AsyncSession,
-        obj: ModelType,
-        obj_in: UpdateSchemaType | dict[str, Any],
+        obj: TModel,
+        obj_in: TUpdate | dict[str, Any],
         with_commit: bool = True,
-    ) -> ModelType:
+    ) -> TModel:
         obj_data = obj.__dict__
 
         if isinstance(obj_in, dict):
@@ -139,8 +134,8 @@ class CoreCRUD(
 
     @staticmethod
     async def remove(
-        db: AsyncSession, obj: ModelType, with_commit: bool = True
-    ) -> ModelType | None:
+        db: AsyncSession, obj: TModel, with_commit: bool = True
+    ) -> TModel | None:
         await db.delete(obj)
 
         if with_commit:
