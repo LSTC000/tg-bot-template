@@ -19,7 +19,8 @@
    * macOS / Linux: ```source ./venv/bin/activate```
    * Windows: ```./venv/Scripts/Activate```
 3. Устанавливаем пакеты: ```pip install -r requirements.txt```
-4. Поднимаем docker контейнеры: 
+4. Создаём файл переменных окружения ```.env``` на основе ```.enc.local```
+5. Поднимаем docker контейнеры: 
    * macOS / Linux: ```sudo docker compose -f ./deployment/docker-compose.local.yaml up -d --build```
    * Windows: ```docker compose -f ./deployment/docker-compose.local.yaml up -d --build```
 
