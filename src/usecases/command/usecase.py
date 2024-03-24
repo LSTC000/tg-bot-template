@@ -1,13 +1,13 @@
-from aiogram import Bot
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 
 from src import schemas, states
+from src.messages import MessageRepository
+from src.common.message import MessageManager
 from src.common.keyboard import KeyboardManager
 from src.common.state import StateManager
 from src.config import settings
 from src.keyboards import KeyboardRepository
-from src.loader import BotLoader
 from src.services import ServiceRepository
 
 from ..core import CoreUseCase
@@ -16,8 +16,7 @@ from ..core import CoreUseCase
 class CommandUseCase(CoreUseCase):
     services: ServiceRepository = ServiceRepository()
     keyboards: KeyboardRepository = KeyboardRepository()
-
-    _bot: Bot = BotLoader.get_bot()
+    messages: MessageRepository = MessageRepository()
 
     _cmd_start_msg: str = settings.message.command.START
     _interaction_welcome_msg: str = settings.message.interaction.WELCOME
@@ -34,16 +33,14 @@ class CommandUseCase(CoreUseCase):
 
         await StateManager.clear(state)
 
-        send_message = await self._bot.send_message(
+        message_id = await self.messages.command.start(
             chat_id=user_id,
-            text=self._cmd_start_msg,
-            reply_markup=self.keyboards.inline.command.start(),
         )
 
         await StateManager.update_data(
             state=state,
             data=schemas.StateData(
-                last_inline_keyboard_message_id=send_message.message_id
+                last_inline_keyboard_message_id=message_id
             ),
         )
         await StateManager.set_state(
@@ -64,7 +61,7 @@ class CommandUseCase(CoreUseCase):
                 data=schemas.StateData(last_inline_keyboard_message_id=None),
             )
 
-        await self._bot.send_message(
+        await MessageManager.send_message(
             chat_id=user_id,
             text=self._interaction_welcome_msg,
         )
