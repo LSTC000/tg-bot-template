@@ -1,13 +1,12 @@
 from typing import Annotated
 
-from aiogram import F, Router
+from aiogram import Router
 from aiogram3_di import Depends
 from aiogram.filters import CommandStart, StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 
-from src import states
-from src.config import settings
+from src import filters, states
 from src.deps import DepsRepository
 from src.usecases import UseCaseRepository
 
@@ -26,7 +25,7 @@ async def start_msg(
 
 @router.callback_query(
     StateFilter(states.CommandStatesGroup.start),
-    F.data == settings.keyboard.data.command.START,
+    filters.CommandStartFilter(),
 )
 async def start_clb(
     callback: CallbackQuery,
