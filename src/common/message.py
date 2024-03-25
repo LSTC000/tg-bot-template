@@ -88,7 +88,7 @@ class MessageManager:
             cls._logger.error(f"Error to edit message text: {exc}.")
 
     @classmethod
-    async def delete_message(
+    async def remove_message(
         cls,
         chat_id: int,
         message_id: int,
@@ -99,4 +99,4 @@ class MessageManager:
                 message_id=message_id,
             )
         except Exception as exc:
-            cls._logger.error(f"Error to delete message: {exc}.")
+            cls._logger.error(f"Error to remove message: {exc}.")

@@ -14,7 +14,7 @@ class KeyboardManager:
         cls, user_id: int, last_inline_keyboard_message_id: int
     ) -> None:
         try:
-            await MessageManager.delete_message(
+            await MessageManager.remove_message(
                 chat_id=user_id, message_id=last_inline_keyboard_message_id
             )
         except Exception as exc:
